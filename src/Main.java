@@ -3,7 +3,7 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    // Inner static class
+    // Bogie class
     static class Bogie {
         String name;
         int capacity;
@@ -15,36 +15,39 @@ public class Main {
 
         @Override
         public String toString() {
-            return name + " -> " + capacity;
+            return name + " (" + capacity + ")";
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        System.out.println("=== UC8 - Filter Bogies using Streams ===");
+        System.out.println("=== UC9 - Group Bogies using Streams ===");
 
-        // Original list (same as UC7)
+        // Reusing list (similar to UC7 & UC8)
         List<Bogie> bogies = new ArrayList<>();
 
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("Sleeper", 80));
         bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("AC Chair", 60));
 
         // Display original list
         System.out.println("\nOriginal Bogies:");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        bogies.forEach(System.out::println);
 
-        // 🔥 Stream filtering (capacity > 60)
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // 🔥 GROUPING LOGIC
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        // Display filtered result
-        System.out.println("\nFiltered Bogies (Capacity > 60):");
-        for (Bogie b : filteredBogies) {
-            System.out.println(b);
+        // Display grouped result
+        System.out.println("\nGrouped Bogies:");
+
+        for (String key : groupedBogies.keySet()) {
+            System.out.println("\nType: " + key);
+            for (Bogie b : groupedBogies.get(key)) {
+                System.out.println("  " + b);
+            }
         }
     }
 }
