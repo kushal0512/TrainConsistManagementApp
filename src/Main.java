@@ -1,19 +1,18 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
-    // Inner static class for Bogie
+    // Inner static class
     static class Bogie {
         String name;
         int capacity;
 
-        // Constructor
         Bogie(String name, int capacity) {
             this.name = name;
             this.capacity = capacity;
         }
 
-        // toString method for clean printing
         @Override
         public String toString() {
             return name + " -> " + capacity;
@@ -22,28 +21,29 @@ public class Main {
 
     public static void main(String[] args){
 
-        System.out.println("=== UC7 - Sort Bogies by Capacity ===");
+        System.out.println("=== UC8 - Filter Bogies using Streams ===");
 
-        // Create list of bogies
+        // Original list (same as UC7)
         List<Bogie> bogies = new ArrayList<>();
 
-        // Add bogies
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
 
-        // Display before sorting
-        System.out.println("\nBefore Sorting:");
+        // Display original list
+        System.out.println("\nOriginal Bogies:");
         for (Bogie b : bogies) {
             System.out.println(b);
         }
 
-        // Sort using Comparator (ascending order)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // 🔥 Stream filtering (capacity > 60)
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // Display after sorting
-        System.out.println("\nAfter Sorting (Ascending by Capacity):");
-        for (Bogie b : bogies) {
+        // Display filtered result
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        for (Bogie b : filteredBogies) {
             System.out.println(b);
         }
     }
