@@ -1,5 +1,5 @@
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 public class Main {
 
@@ -21,33 +21,26 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("=== UC9 - Group Bogies using Streams ===");
+        System.out.println("=== UC10 - Total Seating Capacity ===");
 
-        // Reusing list (similar to UC7 & UC8)
+        // Reuse list (same style as UC7, UC8, UC9)
         List<Bogie> bogies = new ArrayList<>();
 
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("Sleeper", 80));
         bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("AC Chair", 60));
 
-        // Display original list
-        System.out.println("\nOriginal Bogies:");
+        // Display bogies
+        System.out.println("\nBogies:");
         bogies.forEach(System.out::println);
 
-        // 🔥 GROUPING LOGIC
-        Map<String, List<Bogie>> groupedBogies = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.name));
+        // 🔥 AGGREGATION USING STREAM
+        int totalCapacity = bogies.stream()
+                .map(b -> b.capacity)          // extract capacity
+                .reduce(0, Integer::sum);     // sum all values
 
-        // Display grouped result
-        System.out.println("\nGrouped Bogies:");
-
-        for (String key : groupedBogies.keySet()) {
-            System.out.println("\nType: " + key);
-            for (Bogie b : groupedBogies.get(key)) {
-                System.out.println("  " + b);
-            }
-        }
+        // Display result
+        System.out.println("\nTotal Seating Capacity: " + totalCapacity);
     }
 }
